@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/countries")
 public class CountryController {
     @Autowired
     private  LogRepository logRepository;
@@ -22,13 +22,13 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @GetMapping("/countries")
+    @GetMapping("/all")
     public ResponseEntity<?> getCountries(){
         String response = countryService.getCountries();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/countries/{name}")
+    @GetMapping(value = "/name/{name}")
     public ResponseEntity<?> getCountryByName(@PathVariable String name){
         Country country = countryService.getCountryByName(name);
 
@@ -38,7 +38,8 @@ public class CountryController {
             countryInfo.setPopulation(country.getPopulation());
             return ResponseEntity.ok(countryInfo);
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El país '" + name + "' no fue encontrado o no existe.");
+            String msg = "El país '" + name + "' no fue encontrado";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
         }
 
     }

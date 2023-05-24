@@ -35,7 +35,7 @@ public class CountryService {
                 return countries[0];
             }
         }catch (HttpClientErrorException.NotFound ex){
-            //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El país '" + name + "' no fue encontrado o no existe.");
+            System.err.println(ex.getMessage());
         }
         return null;
     }
